@@ -17,6 +17,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener{
     static int currentState = MENU;
     Timer frameDraw;
     Rocketship r=new Rocketship(250,700,50,50);
+    ObjectManager manager=new ObjectManager(r);
     GamePanel(){
     	this.frameDraw=new Timer(1000/60,this);
     	frameDraw.start();
@@ -35,7 +36,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void updateGameState() { 
-		
+		manager.update();
 	}
 	void updateEndState()  { 
 		
@@ -50,8 +51,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener{
 		g.drawString("Press SPACE for instructions", 100, 600);
 	}
 	void drawGameState(Graphics g) { 
-		r.draw(g);
-		System.out.println("game");
+		manager.draw(g);
 	}
 	void drawEndState(Graphics g)  { 
 		g.drawString("Game Over", 250, 400);
@@ -85,21 +85,32 @@ class GamePanel extends JPanel implements ActionListener, KeyListener{
 		    }
 		}
 		if (e.getKeyCode()==KeyEvent.VK_UP) {
-		    r.up(speed);
+		    r.up(r.speed);
 		}
 		if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-		    r.down(speed);
+		    r.down(r.speed);
 		}
 		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-		    r.right(speed);
+		    r.right(r.speed);
 		}
 		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-		    r.left(speed);
+		    r.left(r.speed);
 		}
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if (e.getKeyCode()==KeyEvent.VK_UP) {
+		    r.up(r.speed/2);
+		}
+		if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+		    r.down(r.speed/2);
+		}
+		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+		    r.right(r.speed/2);
+		}
+		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+		    r.left(r.speed/2);
+		}
 	}
 }
